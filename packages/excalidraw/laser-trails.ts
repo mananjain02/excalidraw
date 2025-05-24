@@ -26,17 +26,28 @@ export class LaserTrails implements Trail {
       ...this.getTrailOptions(),
       fill: () => DEFAULT_LASER_COLOR,
     });
+
+    window.addEventListener("keydown", this.handleKeyDown);
+  }
+
+  private handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key.toLowerCase() === "c") {
+      this.clearAllTrails();
+    }
+  };
+
+  private clearAllTrails() {
+    this.localTrail.reset(); // You may need to implement `.reset()` in AnimatedTrail
+    for (const trail of this.collabTrails.values()) {
+      trail.reset(); // same here
+    }
   }
 
   private getTrailOptions() {
     return {
+      sizeMapping: () => 1,
       simplify: 0,
-      streamline: 0.5,
-      sizeMapping: (c) => {
-        const DECAY_LENGTH = 50;
-        return (DECAY_LENGTH -
-          Math.min(DECAY_LENGTH, c.totalLength - c.currentIndex)) / DECAY_LENGTH;
-      },
+      streamline: 0,
     } as Partial<LaserPointerOptions>;
   }
 

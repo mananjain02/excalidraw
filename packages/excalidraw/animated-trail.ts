@@ -61,6 +61,11 @@ export class AnimatedTrail implements Trail {
     return !!this.currentTrail;
   }
 
+  reset() {
+    this.clearTrails();
+  }
+
+
   hasLastPoint(x: number, y: number) {
     if (this.currentTrail) {
       const len = this.currentTrail.originalPoints.length;
@@ -149,13 +154,13 @@ export class AnimatedTrail implements Trail {
       paths.push(currentPath);
     }
 
-    this.pastTrails = this.pastTrails.filter((trail) => {
-      return trail.getStrokeOutline().length !== 0;
-    });
+    // this.pastTrails = this.pastTrails.filter((trail) => {
+    //   return trail.getStrokeOutline().length !== 0;
+    // });
 
-    if (paths.length === 0) {
-      this.stop();
-    }
+    // if (paths.length === 0) {
+    //   this.stop();
+    // }
 
     const svgPaths = paths.join(" ").trim();
 
