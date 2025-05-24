@@ -31,20 +31,11 @@ export class LaserTrails implements Trail {
   private getTrailOptions() {
     return {
       simplify: 0,
-      streamline: 0.4,
+      streamline: 0.5,
       sizeMapping: (c) => {
-        const DECAY_TIME = 1000;
         const DECAY_LENGTH = 50;
-        const t = Math.max(
-          0,
-          1 - (performance.now() - c.pressure) / DECAY_TIME,
-        );
-        const l =
-          (DECAY_LENGTH -
-            Math.min(DECAY_LENGTH, c.totalLength - c.currentIndex)) /
-          DECAY_LENGTH;
-
-        return Math.min(easeOut(l), easeOut(t));
+        return (DECAY_LENGTH -
+          Math.min(DECAY_LENGTH, c.totalLength - c.currentIndex)) / DECAY_LENGTH;
       },
     } as Partial<LaserPointerOptions>;
   }
